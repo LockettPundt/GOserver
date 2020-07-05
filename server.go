@@ -5,29 +5,17 @@ import (
 	"log"
 	"net/http"
 
+	routes "github.com/LockettPundt/GOserver/routes"
 	"github.com/slayer/autorestart"
 )
-
-func formHandler(w http.ResponseWriter, r *http.Request) {
-	if err := r.ParseForm(); err != nil {
-		fmt.Fprintf(w, "ParseForm() err: %v", err)
-		return
-	}
-	fmt.Fprintf(w, "POST request successful")
-	name := r.FormValue("name")
-	address := r.FormValue("address")
-
-	fmt.Fprintf(w, "Name = %s\n", name)
-	fmt.Fprintf(w, "Address = %s\n", address)
-}
 
 func main() {
 	autorestart.StartWatcher()
 	fileServer := http.FileServer(http.Dir("./static"))
 
 	http.Handle("/", fileServer)
-	http.HandleFunc("/form", formHandler)
-	//http.HandleFunc("/hello", routes.helloHandler)
+	http.HandleFunc("/form", routes.FormHandler)
+	http.HandleFunc("/hello", routes.HelloHandler)
 
 	port := ":5055"
 	fmt.Printf(" ✔ Server starting on PORT %v ✔  \n", port)
