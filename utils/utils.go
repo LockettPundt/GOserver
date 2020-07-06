@@ -7,6 +7,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// GoDotEnvVariable ---> get env variables
 func GoDotEnvVariable(key string) string {
 
 	// load .env file
